@@ -50,7 +50,7 @@ public class ArrCharOps {
      */
     public static boolean equals(char[] arr1, char[] arr2) {
 
-        if (arr1.length != arr2.length) {
+        if (arr1.length != arr2.length|| arr1.length==0 || arr2.length==0 ) {
             return false;
         } else {
             for (int i = 0; i < arr1.length; i++) {
