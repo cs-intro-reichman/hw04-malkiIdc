@@ -31,8 +31,9 @@ public class Primes {
             p++;
         }
 
-        // 3. Print the results and count them (matching Slide 25)
-        System.out.println("Primes up to " + N + ":");
+        // 3. Print the results and count them
+        // FIXED: Changed "Primes" to "Prime numbers" to match the tester requirements
+        System.out.println("Prime numbers up to " + N + ":");
         
         int count = 0;
         for (int i = 2; i <= N; i++) {
