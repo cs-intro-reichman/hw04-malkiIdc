@@ -50,7 +50,9 @@ public class ArrCharOps {
      */
     public static boolean equals(char[] arr1, char[] arr2) {
 
-        if (arr1.length != arr2.length|| arr1.length==0 || arr2.length==0 ) {
+        if (arr1.length == 0 && arr2.length == 0) {
+            return true;
+        } else if (arr1.length != arr2.length) {
             return false;
         } else {
             for (int i = 0; i < arr1.length; i++) {
@@ -135,10 +137,10 @@ public class ArrCharOps {
     public static char[] subArray(char[] arr, int beginIndex, int endIndex) {
         char[] result = new char[endIndex - beginIndex];
 
-        for (int i = beginIndex; i < endIndex ; i++) {
+        for (int i = beginIndex; i < endIndex; i++) {
             result[i - beginIndex] = arr[i];
         }
-     return result;
+        return result;
     }
 
     /**
