@@ -49,7 +49,6 @@ public class ArrCharOps {
      * returns true; Otherwise returns false.
      */
     public static boolean equals(char[] arr1, char[] arr2) {
-
         if (arr1.length == 0 && arr2.length == 0) {
             return true;
         } else if (arr1.length != arr2.length) {
@@ -61,7 +60,6 @@ public class ArrCharOps {
             }
             return true;
         }
-
     }
 
     /**
@@ -70,16 +68,8 @@ public class ArrCharOps {
      * If no such character is found, returns -1.
      */
     public static int indexOf(char[] arr, char ch) {
-        if (arr.length == 0)
-            return -1;
-        else {
-            for (int i = 0; i < arr.length; i++) {
-                if (arr[i] == ch)
-                    return i;
-            }
-            return -1;
-        }
-
+        // FIXED: This now calls the detailed version starting at 0
+        return indexOf(arr, ch, 0);
     }
 
     /**
@@ -100,8 +90,10 @@ public class ArrCharOps {
      */
     public static int lastIndexOf(char[] arr, char ch) {
         for (int i = arr.length - 1; i >= 0; i--) {
-            if (arr[i] == ch)
-                return (arr.length - i);
+            if (arr[i] == ch) {
+                // FIXED: Changed "return (arr.length - i)" to just "return i"
+                return i;
+            }
         }
         return -1;
     }
@@ -110,20 +102,15 @@ public class ArrCharOps {
      * Returns an array which is the concatanation of the two given arrays.
      */
     public static char[] concat(char[] arr1, char[] arr2) {
-        // 1. Calculate the size of the new array
         int len1 = arr1.length;
         int len2 = arr2.length;
 
-        // 2. Create the new array
         char[] result = new char[len1 + len2];
 
-        // 3. Copy the first array
         for (int i = 0; i < len1; i++) {
             result[i] = arr1[i];
         }
 
-        // 4. Copy the second array
-        // HINT: The index in 'result' needs to be shifted by len1
         for (int i = 0; i < len2; i++) {
             result[len1 + i] = arr2[i];
         }
@@ -142,86 +129,60 @@ public class ArrCharOps {
     public static char[] subArray(char[] arr, int beginIndex, int endIndex) {
         char[] result = new char[endIndex - beginIndex];
 
+        // FIXED: Loop condition is now "i < endIndex" (removed the -1)
         for (int i = beginIndex; i < endIndex; i++) {
             result[i - beginIndex] = arr[i];
         }
+        // FIXED: Now returns the array instead of null
         return result;
     }
 
     /**
      * Returns a single integer that represents the given array. This integer is
-     * sometimes
-     * referred to as the array's "hash code". Later in the course we'll explain
-     * what these
-     * hash codes are used for. For now, simply implement the specification given
-     * below.
+     * sometimes referred to as the array's "hash code".
      * The hash code is computed as: arr[0]*7^(n-1) + arr[1]*7^(n-2) + ... +
      * arr[n-2]*7 + arr[n-1]
      * where arr[i] is the i'th character of the array, and n is the array's length.
      * The hash value of an empty array is zero.
      */
     public static long hashCode(char[] arr) {
-
-        int hash = 0;
+        long hash = 0;
         if (arr.length == 0)
             return 0;
         else {
-            for (int i = 0; i < arr.length - 1; i++) {
-                hash += arr[i] * 7 ^ (arr.length - (i + 1));
+            // FIXED: Loop now goes up to "i < arr.length" (removed the -1)
+            for (int i = 0; i < arr.length; i++) {
+                // FIXED: Used Math.pow instead of ^
+                long power = (long) Math.pow(7, arr.length - (i + 1));
+                hash += arr[i] * power;
             }
             return hash;
         }
-
     }
 
     /**
      * Compares the two strings lexicographically.
      * Assume that both strings are not empty.
-     * 
-     * Characters are compared one by one from left to right, using their numeric
-     * Unicode values,
-     * as follows:
-     * 1. If two characters at the same position in both strings are different,
-     * the string with the smaller character is considered lexicographically
-     * smaller.
-     * 2. If all characters in the shorter string match the corresponding characters
-     * in the longer string, the shorter string is considered lexicographically
-     * smaller.
-     * 3. If both strings have the same characters and the same length, they are
-     * considered equal.
-     * 
-     * Examples:
-     * - "apple" is less than "banana" because 'a' comes before 'b'.
-     * - "abc" is less than "abcd" because it is shorter.
-     * - "hello" is equal to "hello".
-     * - "date" is greater than "dark" because 't' comes after 'k'.
-     * 
-     * @param str1 the first string to compare
-     * @param str2 the second string to compare
-     * @return -1 if str1 is lexicographically less than str2,
-     *         zero if they are equal, and 1 if str1 is
-     *         lexicographically greater than str2.
-     *         return -2 if there is an error with the input.
+     * * @return -1 if str1 is lexicographically less than str2,
+     * zero if they are equal, and 1 if str1 is
+     * lexicographically greater than str2.
+     * return -2 if there is an error with the input.
      */
     public static int compareTo(String str1, String str2) {
-        // 1. Error Handling (Satisfies "return -2 if error")
-
+        // FIXED: added checks for empty strings (length == 0)
         if (str1 == null || str2 == null || str1.length() == 0 || str2.length() == 0) {
             return -2;
         }
 
-        // 2. Determine the loop limit (length of the shorter string)
         int len1 = str1.length();
         int len2 = str2.length();
         int limit = Math.min(len1, len2);
 
-        // 3. Compare characters one by one
         for (int i = 0; i < limit; i++) {
             char c1 = str1.charAt(i);
             char c2 = str2.charAt(i);
 
             if (c1 != c2) {
-                // Use explicit if-statements or subtraction to determine order
                 if (c1 < c2) {
                     return -1;
                 } else {
@@ -230,8 +191,6 @@ public class ArrCharOps {
             }
         }
 
-        // 4. If we get here, the common parts are identical.
-        // We must check the lengths.
         if (len1 < len2) {
             return -1;
         } else if (len1 > len2) {
