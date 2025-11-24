@@ -138,7 +138,7 @@ public class ArrCharOps {
         for (int i = beginIndex; i < endIndex ; i++) {
             result[i - beginIndex] = arr[i];
         }
-        return null;
+     return result;
     }
 
     /**
