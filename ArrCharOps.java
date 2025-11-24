@@ -70,11 +70,16 @@ public class ArrCharOps {
      * If no such character is found, returns -1.
      */
     public static int indexOf(char[] arr, char ch) {
-        for (int i = 0; i < arr.length; i++) {
-            if (arr[i] == ch)
-                return i;
+        if (arr.length == 0)
+            return -1;
+        else {
+            for (int i = 0; i < arr.length; i++) {
+                if (arr[i] == ch)
+                    return i;
+            }
+            return -1;
         }
-        return -1;
+
     }
 
     /**
@@ -200,7 +205,8 @@ public class ArrCharOps {
      */
     public static int compareTo(String str1, String str2) {
         // 1. Error Handling (Satisfies "return -2 if error")
-        if (str1 == null || str2 == null) {
+
+        if (str1 == null || str2 == null || str1.length() == 0 || str2.length() == 0) {
             return -2;
         }
 
