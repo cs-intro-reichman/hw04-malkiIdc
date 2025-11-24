@@ -24,6 +24,8 @@ public class MyString {
                 ans += (char) (str.charAt(i) + 32);
             } else if ((str.charAt(i) >= 'a' && str.charAt(i) <= 'z')) {
                 ans += str.charAt(i);
+            } else if ((str.charAt(i) == ' ')) {
+                ans += str.charAt(i);
             }
         }
         return ans;
@@ -43,6 +45,7 @@ public class MyString {
                 if (count == str2.length()) {
                     return true;
                 }
+                count = 0;
             }
 
         }
